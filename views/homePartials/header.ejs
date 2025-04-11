@@ -1,0 +1,41 @@
+<header>
+  <div class="h1-btns">
+    <h1>ToDoList</h1>
+    <div class="btnsSetor">
+      <button class="btnSetor clicked" id="btnTodas">Todas</button>
+      <% if (list?.categories?.length > 0) { %> <%
+      list.categories.forEach(category => { %>
+      <button btnCategoryAttr="<%= category %>" class="btnSetor">
+        <%= category %>
+      </button>
+      <% }) %> <% } %>
+
+      <div class="divAddCat">
+        <input
+          class="hidden"
+          type="text"
+          id="novaCategoriaInp"
+          placeholder="Categoria"
+        />
+        <button id="adicionarCategoria" class="hidden">Adicionar</button>
+        <button id="newCategory">Nova Categoria</button>
+
+        <p class="removerCategoriaP">
+          <select name="removerCategoria" id="removerCategoria">
+            <% if (list?.categories?.length > 0) { %> <%
+            list.categories.forEach(category => { %>
+            <option value="<%= category%>"><%= category %></option>
+            <% }) %> <% } %>
+          </select>
+          <button id="removerCategoriaBtn">Remover</button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="minhasListas-novaListas">
+    <a id="minhasListas" href="/">Minhas Listas</a>
+
+    <a id="newSheet" href="/new-sheet">Nova Lista</a>
+  </div>
+</header>

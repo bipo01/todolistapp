@@ -1,0 +1,151 @@
+<script>
+  removerCategoriaBtn?.addEventListener("click", () => {
+    const categoryToRemove = removerCategoria.value.trim();
+
+    const removerBool = prompt(
+      `Caso queira deletar a categoria e manter as tarefas, digite "delete". Para remover a categoria e todas e suas tarefas, digite "remove".`
+    );
+
+    switch (removerBool?.toLowerCase()) {
+      case "delete":
+        socket.emit("delete-category", { idList, categoryToRemove });
+
+        break;
+
+      case "remove":
+        socket.emit("remove-category", { idList, categoryToRemove });
+
+        break;
+
+      default:
+        alert("Valor inválido. Categoria não removida");
+        break;
+    }
+  });
+
+  newCategory?.addEventListener("click", () => {
+    novaCategoriaInp.value = "";
+
+    novaCategoriaInp.classList.toggle("hidden");
+    adicionarCategoria.classList.toggle("hidden");
+    newCategory.textContent = `${
+      newCategory.textContent == "Nova Categoria"
+        ? "Cancelar"
+        : "Nova Categoria"
+    }`;
+  });
+
+  adicionarCategoria?.addEventListener("click", () => {
+    newCategory.textContent = "Nova Categoria";
+    if (novaCategoriaInp.value.trim().length > 0) {
+      const newCategory = novaCategoriaInp.value.trim();
+
+      socket.emit("new-category", { newCategory, idList });
+
+      novaCategoriaInp.value = "";
+
+      novaCategoriaInp.classList.toggle("hidden");
+      adicionarCategoria.classList.toggle("hidden");
+      newCategory.textContent = `${
+        newCategory.textContent == "Nova Categoria"
+          ? "Cancelar"
+          : "Nova Categoria"
+      }`;
+    } else {
+      alert("Categoria vazia!");
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("btnSetor")) {
+      document.querySelectorAll(".btnSetor").forEach((btn) => {
+        btn.classList.remove("clicked");
+      });
+      e.target.classList.add("clicked");
+
+      category = e.target.textContent.trim();
+
+      selectTasksBySetor(e.target);
+
+      selectTasksByUser();
+    }
+  });
+
+  socket.on("delete-category", (data) => {
+    if (data.list_id != idList) return;
+
+    document
+      .querySelector(`[btnCategoryAttr="${data.categoryToRemove}"]`)
+      .remove();
+
+    document.querySelectorAll(".btnSetor").forEach((el) => {
+      el.classList.remove("clicked");
+    });
+    document.querySelector("#btnTodas").classList.add("clicked");
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      el.classList.remove("hidden");
+    });
+
+    document
+      .querySelectorAll(`[value="${data.categoryToRemove}"]`)
+      .forEach((el) => {
+        el.remove();
+      });
+
+    document
+      .querySelectorAll(`[category="${data.categoryToRemove}"]`)
+      .forEach((el) => {
+        el.setAttribute("category", "Sem categoria");
+      });
+  });
+
+  socket.on("remove-category", (data) => {
+    if (data.list_id != idList) return;
+
+    document
+      .querySelector(`[btnCategoryAttr="${data.categoryToRemove}"]`)
+      .remove();
+
+    document.querySelectorAll(".btnSetor").forEach((el) => {
+      el.classList.remove("clicked");
+    });
+    document.querySelector("#btnTodas").classList.add("clicked");
+
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      el.classList.remove("hidden");
+    });
+
+    document
+      .querySelectorAll(`[value="${data.categoryToRemove}"]`)
+      .forEach((el) => {
+        el.remove();
+      });
+
+    document
+      .querySelectorAll(`[category="${data.categoryToRemove}"]`)
+      .forEach((el) => {
+        el.remove();
+      });
+  });
+
+  socket.on("new-category", (data) => {
+    if (data.list_id != idList) return;
+    const newCategory = data.newCategory;
+
+    const html = `
+        <button btnCategoryAttr="${newCategory}" class="btnSetor">${newCategory}</button>
+      `;
+
+    divAddCat.insertAdjacentHTML("beforebegin", html);
+
+    const html1 = `
+    <option value="${newCategory}">${newCategory}</option>
+    `;
+
+    removerCategoria.insertAdjacentHTML("beforeend", html1);
+    document.querySelector("#category").insertAdjacentHTML("beforeend", html1);
+    document
+      .querySelector("#editTaskContainer #category")
+      .insertAdjacentHTML("beforeend", html1);
+  });
+</script>

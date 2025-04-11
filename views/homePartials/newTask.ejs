@@ -1,0 +1,34 @@
+<div class="hidden" id="newTaskContainer">
+  <form class="" action="/add" method="post">
+    <input required type="text" name="task" id="task" placeholder="Tarefa" />
+    <textarea
+      required
+      rows="12"
+      name="description"
+      id="description"
+      placeholder="Descrição da tarefa"
+    ></textarea>
+    <select name="category" id="category">
+      <option selected value="Sem categoria">Sem categoria</option>
+      <% if (list?.categories?.length > 0) { %> <%
+      list.categories.forEach(category => { %>
+      <option value="<%= category%>"><%= category %></option>
+      <% }) %> <% } %>
+    </select>
+
+    <select type="text" name="user_id" id="user_id">
+      <% for( let i = 0; i < allUsers?.length; i++ ) { %>
+      <option
+        userName="<%= allUsers[i].username %>"
+        value="<%= allUsers[i].id %>"
+      >
+        <%= allUsers[i].name %>
+      </option>
+      <% } %>
+    </select>
+    <div class="dificuldade-prazo">
+      <input required type="date" name="deadline" id="deadline" />
+      <button id="addTarefa" type="submit">Adicionar</button>
+    </div>
+  </form>
+</div>

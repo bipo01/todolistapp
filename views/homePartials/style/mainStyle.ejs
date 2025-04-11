@@ -1,0 +1,91 @@
+<style>
+  main {
+    grid-column: 3/13;
+    grid-row: 1/13;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+
+  #addTarefa,
+  #newTask,
+  #newUser {
+    padding: 0.5rem;
+    background: #202d48;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    word-wrap: break-word;
+  }
+
+  #addTarefa:hover,
+  #newTask:hover,
+  #newUser:hover {
+    background: #334874;
+  }
+
+  .showNewTask-addSelectUser {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .addSelectUser {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  #selectUserTasks {
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .showNewTask input,
+  .showNewTask select,
+  .addSelectUser input,
+  .addSelectUser select {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  .closeBtn {
+    border: none;
+    outline: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    margin: 10px;
+    border-radius: 5px;
+    margin-left: auto;
+  }
+
+  .selected {
+    background: rgb(120, 120, 230);
+    color: black;
+    padding: 0.8rem;
+  }
+
+  .concluir-excluir {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .concluir-excluir button {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>

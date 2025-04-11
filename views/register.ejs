@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <%- include("./style/registerStyle.ejs") %>
+  </head>
+  <body>
+    <form action="/register" method="post">
+      <h2>Welcome To Our ToDoList!</h2>
+
+      <input class="<%= username && "userExists" %>" value="<%= username || ""
+      %>" autocomplete="off" type="text" name="username" id="username"
+      placeholder="Username" /> <input value="<%= name || "" %>"
+      autocomplete="off" type="text" name="name" id="name" placeholder="Name" />
+      <input value="<%= password || "" %>" autocomplete="off" type="password"
+      name="password" id="password" placeholder="Password" /> <input value="<%=
+      password || "" %>" autocomplete="off" type="password" name="passwordC"
+      id="passwordC" placeholder="Confirm Password" />
+
+      <button type="submit">Sign Up</button>
+      <a href="/login">Log in my account</a>
+    </form>
+
+    <%-include("./script/registerScript.ejs")%>
+  </body>
+</html>

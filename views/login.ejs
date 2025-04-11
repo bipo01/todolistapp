@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <%- include("./style/loginStyle.ejs") %>
+  </head>
+  <body>
+    <form action="/login" method="post">
+      <h2>Welcome back!</h2>
+      <input
+        autocomplete="off"
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+      />
+      <input
+        autocomplete="off"
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+      />
+      <button type="submit">Log In</button>
+      <a href="/register">Create New Account</a>
+    </form>
+  </body>
+</html>

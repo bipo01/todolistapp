@@ -1,0 +1,30 @@
+<script>
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = document.querySelector("#username").value.trim();
+    const name = document.querySelector("#name").value.trim();
+    const password = document.querySelector("#password").value.trim();
+    const passwordC = document.querySelector("#passwordC").value.trim();
+
+    const allInputs = [username, name, password, passwordC];
+    if (allInputs.some((el) => el.length < 1)) {
+      alert("Please, fill in all the fields!");
+      return;
+    }
+
+    if (username.length < 4) {
+      alert("User must contain at least 4 characters.");
+      return;
+    }
+
+    if (password != passwordC) {
+      alert("Passwords must be the same.");
+      return;
+    }
+
+    form.submit();
+  });
+</script>

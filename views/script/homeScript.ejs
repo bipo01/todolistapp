@@ -1,0 +1,90 @@
+<script>
+  const socket = io();
+  const formAdd = document.querySelector(`form[action='/add']`);
+  const formEdit = document.querySelector(`form[action='/edit']`);
+  const tarefas = document.querySelector(".tarefas");
+  const detalhes = document.querySelector(".detalhes");
+  const btnsSetor = document.querySelectorAll(".btnSetor");
+  const btnNewTask = document.querySelector("#newTask");
+
+  const selectUserTasks = document.querySelector("#selectUserTasks");
+  const newCategory = document.querySelector("#newCategory");
+  const adicionarCategoria = document.querySelector("#adicionarCategoria");
+  const divAddCat = document.querySelector(".divAddCat");
+  const novaCategoriaInp = document.querySelector("#novaCategoriaInp");
+  const removerCategoriaBtn = document.querySelector("#removerCategoriaBtn");
+  const removerCategoria = document.querySelector("#removerCategoria");
+  const newUser = document.querySelector("#newUser");
+  const novoUsuario = document.querySelector("#novoUsuario");
+  const cancelarNewUser = document.querySelector("#cancelarNewUser");
+  const newSheet = document.querySelector("#newSheet");
+  const nameSheet = document.querySelector("#nameSheet");
+  const newSheetRedirect = document.querySelector("#newSheetRedirect");
+  const deletarUser = document.querySelector("#deletarUser");
+  const newTaskContainer = document.querySelector("#newTaskContainer");
+  const editTaskContainer = document.querySelector("#editTaskContainer");
+  const user_id = document.querySelector("#user_id");
+
+  const idList = document.querySelector("body").getAttribute("idList");
+  const idUser = Number(document.querySelector("body").getAttribute("idUser"));
+  const idAdmin = Number(
+    document.querySelector("body").getAttribute("idAdmin")
+  );
+
+  let curUser = selectUserTasks.value.trim();
+  let category = document.querySelector(".clicked").textContent.trim();
+  const newCategories = [];
+
+  newSheet?.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const novaLista = prompt("Nome da Lista:").trim();
+
+    if (novaLista.length > 0) {
+      const formData = new URLSearchParams();
+      formData.append("novaLista", novaLista);
+      formData.append("idUser", idUser);
+
+      const response = await fetch(`${event.currentTarget.href}`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      nameSheet.value = Number(data.dataList.id);
+      newSheetRedirect.submit();
+    } else {
+      alert("Nome inválido");
+    }
+  });
+
+  socket.on("edit-name-sheet", (data) => {
+    const list_id = Number(data.list_id);
+    const newName = data.newName.trim();
+
+    if (idList == list_id) {
+      document.title = newName;
+    }
+  });
+
+  socket.on("delete-sheet", (list_id) => {
+    if (idList == list_id) window.location.href = "/";
+  });
+
+  socket.on("leave-sheet", (data) => {
+    const list_id = data.list_id;
+    const user_id = data.user_id;
+
+    console.log("User Id Atual: " + idUser);
+    console.log("User Id Data: " + user_id);
+    console.log("List Id Atual: " + idList);
+    console.log("List Id Data: " + list_id);
+
+    if (idList == list_id) {
+      document
+        .querySelector(`#selectUserTasks option[value="${user_id}"]`)
+        ?.remove();
+      document.querySelector(`#user_id option[value="${user_id}"]`)?.remove();
+    }
+  });
+</script>

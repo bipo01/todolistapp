@@ -1,0 +1,121 @@
+<div class="tarefas-detalhes">
+  <div class="tarefas-state">
+    <div class="toStart">
+      <div class="blue"></div>
+      <h4>A começar</h4>
+    </div>
+
+    <div class="tarefas">
+      <% if (tasks?.length > 0) { %> <% tasks.forEach(el => { %> <% if (el.state
+      == "A começar") { %> <% const userTask = allUsers.find(us => us.id ==
+      el.user_id)%>
+
+      <div
+        title="<%=userTask?.name%>"
+        username="<%=userTask?.name%>"
+        taskIdList="<%=el.list_id%>"
+        taskId="<%=el.id%>"
+        user_id="<%=el.user_id%>"
+        category="<%= el.category %>"
+        class="div-tarefa"
+      >
+        <div class="task-editTask">
+          <h3><%= el.task %></h3>
+          <button title="Editar" class="editTask">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </div>
+        <div class="description hidden"><%=el.description%></div>
+        <div class="deadline-btnsTasks">
+          <p><%= el.deadline %></p>
+          <div class="btnsTarefa">
+            <div class="comecar"></div>
+            <div class="completar"></div>
+            <div class="excluir"></div>
+          </div>
+        </div>
+      </div>
+      <% } %> <%}) %> <% }%>
+    </div>
+  </div>
+
+  <div class="tarefas-state">
+    <div class="inProgress">
+      <div class="orange"></div>
+      <h4>Em progresso</h4>
+    </div>
+
+    <div class="tarefas">
+      <% if (tasks?.length > 0) { %> <% tasks.forEach(el => { %> <% if (el.state
+      == "Em progresso") { %> <% const userTask = allUsers.find(us => us.id ==
+      el.user_id)%>
+
+      <div
+        title="<%=userTask?.name%>"
+        username="<%=userTask?.name%>"
+        taskIdList="<%=el.list_id%>"
+        taskId="<%=el.id%>"
+        user_id="<%=el.user_id%>"
+        category="<%= el.category %>"
+        class="div-tarefa"
+      >
+        <div class="task-editTask">
+          <h3><%= el.task %></h3>
+          <button title="Editar" class="editTask">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </div>
+        <div class="description hidden"><%=el.description%></div>
+        <div class="deadline-btnsTasks">
+          <p><%= el.deadline %></p>
+          <div class="btnsTarefa">
+            <div class="comecar"></div>
+            <div class="completar"></div>
+            <div class="excluir"></div>
+          </div>
+        </div>
+      </div>
+      <% } %> <%}) %> <% }%>
+    </div>
+  </div>
+
+  <div class="tarefas-state">
+    <div class="completed">
+      <div class="green"></div>
+      <h4>Completada</h4>
+    </div>
+
+    <div class="tarefas">
+      <% if (tasks?.length > 0) { %> <% tasks.forEach(el => { %> <% if (el.state
+      == "Completada") { %> <% const userTask = allUsers.find(us => us.id ==
+      el.user_id)%>
+
+      <div
+        title="<%=userTask?.name%>"
+        username="<%=userTask?.name%>"
+        taskIdList="<%=el.list_id%>"
+        taskId="<%=el.id%>"
+        user_id="<%=el.user_id%>"
+        category="<%= el.category %>"
+        class="div-tarefa"
+      >
+        <div class="task-editTask">
+          <h3><%= el.task %></h3>
+          <button title="Editar" class="editTask">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </div>
+        <div class="description hidden"><%=el.description%></div>
+        <div class="deadline-btnsTasks">
+          <p><%= el.deadline %></p>
+          <div class="btnsTarefa">
+            <div class="comecar"></div>
+            <div class="completar"></div>
+            <div class="excluir"></div>
+          </div>
+        </div>
+      </div>
+      <% } %> <%}) %> <% }%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<script>
+  btnNewTask?.addEventListener("click", () => {
+    newTaskContainer?.classList.remove("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target?.id == newTaskContainer.id) {
+      newTaskContainer.classList.add("hidden");
+      formAdd.reset();
+    }
+  });
+
+  formAdd?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const task = formAdd.querySelector("#task")?.value.trim();
+    const description = formAdd.querySelector("#description")?.value.trim();
+    const category = formAdd.querySelector("#category")?.value.trim();
+    const user_id = formAdd.querySelector("#user_id")?.value.trim();
+    const rawDeadline = formAdd.querySelector("#deadline")?.value.trim();
+    const deadline = new Date(rawDeadline).toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    socket.emit("new-task", {
+      task,
+      description,
+      category,
+      user_id,
+      deadline,
+      idList,
+      idAdmin,
+    });
+
+    newTaskContainer.classList.add("hidden");
+    formAdd.reset();
+  });
+
+  socket.on("new-task", (data) => {
+    console.log(data);
+    if (data.list_id != idList) return;
+    console.log("LISTA");
+    const curCategory = document.querySelector(".clicked").textContent.trim();
+
+    const nameUserTask = [...document.querySelectorAll("#user_id option")]
+      .find((el) => el.value == data.user_id)
+      .textContent.trim();
+
+    const html = `
+       <div 
+              title="${nameUserTask}"
+              username="${nameUserTask}"
+              taskIdList="${data.idList}"
+              taskId="${data.id}"
+              user_id="${data.user_id}"
+              category="${data.category}"
+              class="div-tarefa ${
+                (data.category.trim() == curCategory ||
+                  curCategory == "Todas") &&
+                (curUser == "Todos" || curUser == data.user_id)
+                  ? ""
+                  : "hidden"
+              }"
+            >
+              <div class="task-editTask">
+                <h3>${data.task}</h3>
+                <button title="Editar" class="editTask">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              </div>
+              <div class="hidden description">${data.description}</div>
+              <div class="deadline-btnsTasks">
+                <p>${data.deadline}</p>
+                <div class="btnsTarefa">
+                  <div class="comecar"></div>
+                  <div class="completar"></div>
+                  <div class="excluir"></div>
+                </div>
+              </div>
+            </div>
+    `;
+
+    document.querySelector(".tarefas").insertAdjacentHTML("afterbegin", html);
+  });
+</script>

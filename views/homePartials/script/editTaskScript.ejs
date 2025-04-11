@@ -1,0 +1,64 @@
+<script>
+  formEdit?.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const task = formEdit.querySelector("#task").value;
+    const task_id = formEdit.querySelector("#task_id").value;
+    const description = formEdit.querySelector("#description").value;
+    const category = formEdit.querySelector("#category").value;
+    const user_id = formEdit.querySelector("#user_id").value;
+    const rawDeadline = formEdit.querySelector("#deadline").value;
+    console.log("Raw: " + rawDeadline);
+    const rawDeadline1 = new Date(rawDeadline)
+      .toLocaleString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+      .split("/");
+    const deadline = `${(Number(rawDeadline1[0]) + 1)
+      .toString()
+      .padStart(2, 0)}/${rawDeadline1[1]}/${rawDeadline1[2]}`;
+
+    socket.emit("edit-task", {
+      task,
+      task_id,
+      description,
+      category,
+      user_id,
+      deadline,
+      idList,
+      idAdmin,
+    });
+
+    editTaskContainer.classList.add("hidden");
+    formAdd.reset();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.id == editTaskContainer.id) {
+      editTaskContainer.classList.add("hidden");
+      formEdit.reset();
+    }
+  });
+
+  socket.on("edit-task", (data) => {
+    console.log(data);
+
+    const editedTask = document.querySelector(`[taskId="${data.id}"]`);
+
+    if (!editedTask) return;
+
+    const userName = document.querySelector(
+      `#selectUserTasks option[value="${data.user_id}"]`
+    ).textContent;
+    editedTask.setAttribute("category", data.category);
+    editedTask.setAttribute("title", userName);
+    editedTask.setAttribute("userName", userName);
+    editedTask.setAttribute("user_id", data.user_id);
+    editedTask.querySelector("h3").textContent = data.task;
+    editedTask.querySelector(".description").textContent = data.description;
+    editedTask.querySelector(".deadline-btnsTasks p").textContent =
+      data.deadline;
+  });
+</script>

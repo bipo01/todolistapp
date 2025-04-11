@@ -1,0 +1,39 @@
+<main>
+  <div class="showNewTask-addSelectUser">
+    <button id="newTask">New Task</button>
+
+    <div class="addSelectUser">
+      <% if(list.adm_id == user.id) {%>
+      <button class="hidden" id="cancelarNewUser">Cancelar</button>
+      <button id="newUser">Novo usuário</button>
+
+      <input
+        type="text"
+        name="novoUsuario"
+        id="novoUsuario"
+        placeholder="Usuário"
+        class="hidden"
+      />
+      <% } %>
+
+      <select id="selectUserTasks">
+        <option value="Todos">Todos</option>
+        <% for( let i = 0; i < allUsers?.length; i++ ) { %>
+        <option
+          userName="<%= allUsers[i].username %>"
+          value="<%= allUsers[i].id %>"
+        >
+          <%= allUsers[i].name %>
+        </option>
+        <% } %>
+      </select>
+
+      <% if(list.adm_id == user.id) {%>
+      <button id="deletarUser">Deletar usuário</button>
+      <% } %>
+    </div>
+  </div>
+
+  <%- include("tasks.ejs") %>
+</main>
+<%-include("newTask.ejs")%> <%-include("editTask.ejs")%>

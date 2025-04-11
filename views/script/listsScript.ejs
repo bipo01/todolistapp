@@ -1,0 +1,111 @@
+<script>
+  const socket = io();
+  const newSheet = document.querySelector("#newSheet");
+  const nameSheet = document.querySelector("#nameSheet");
+  const newSheetRedirect = document.querySelector("#newSheetRedirect");
+  const idList = document.querySelector("#idList");
+
+  const idUser = Number(document.body.getAttribute("idUser"));
+
+  newSheet.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const newList = prompt("Nome da Lista:").trim();
+
+    if (newList.length > 0) {
+      const formData = new URLSearchParams();
+      formData.append("newList", newList);
+      formData.append("idUser", idUser);
+
+      console.log(event.currentTarget.href);
+
+      const response = await fetch(`${event.currentTarget.href}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      location.reload();
+    } else {
+      alert("Nome inválido");
+    }
+  });
+
+  document.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains("formList")) {
+      e.target.submit();
+    }
+
+    if (e.target.classList.contains("deleteSheet")) {
+      const idList = Number(e.target.querySelector(`[name='idList']`).value);
+
+      socket.emit("delete-sheet", idList);
+    }
+
+    if (e.target.classList.contains("leaveSheet")) {
+      const idList = Number(e.target.querySelector(`[name='idList']`).value);
+      const idUser = Number(e.target.querySelector(`[name='idUser']`).value);
+
+      socket.emit("leave-sheet", { idList, idUser });
+    }
+
+    if (e.target.classList.contains("editSheet")) {
+      const idList = Number(e.target.querySelector(`[name='idList']`).value);
+      const newName = prompt("Novo nome para lista:").trim();
+
+      if (newName.length > 0) {
+        socket.emit("edit-name-sheet", { idList, newName });
+      }
+    }
+  });
+
+  socket.on("edit-name-sheet", (data) => {
+    console.log(data);
+    const list_id = Number(data.list_id);
+    const newName = data.newName.trim();
+
+    document
+      .querySelector(`[idList="${list_id}"]`)
+      .querySelector(".btnList").textContent = newName;
+  });
+
+  socket.on("leave-sheet", (data) => {
+    const list_id = data.list_id;
+    const user_id = data.user_id;
+
+    if (idUser == user_id) {
+      document.querySelector(`[idList="${list_id}"]`)?.remove();
+    }
+  });
+
+  socket.on("delete-sheet", (list_id) => {
+    console.log(list_id);
+    document.querySelector(`[idList="${list_id}"]`)?.remove();
+
+    if (document.querySelector(".listsContainer").children.length < 1) {
+      document.querySelector(".listsContainer")?.remove();
+      const html = `
+      <p class="message">You don't have any lists.</p>
+      `;
+
+      document.querySelector("h1").insertAdjacentHTML("afterend", html);
+    }
+  });
+
+  socket.on("new-user", (data) => {
+    if (idUser != data.newUser.id) return;
+
+    location.reload();
+  });
+
+  socket.on("delete-user", (data) => {
+    const idUserDeleted = data.user_id;
+    const idListaDeleted = data.list_id;
+
+    if (idUser == idUserDeleted) {
+      location.reload();
+    }
+  });
+</script>

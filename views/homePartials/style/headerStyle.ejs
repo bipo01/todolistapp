@@ -1,0 +1,131 @@
+<style>
+  header {
+    grid-column: 1/3;
+    grid-row: 1/13;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .h1-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  h1 {
+    color: white;
+    letter-spacing: 5px;
+    font-weight: 400;
+    font-size: 25px;
+  }
+
+  .btnSetor,
+  #novaCategoriaInp,
+  #adicionarCategoria,
+  #newCategory {
+    margin: 2px 0;
+    width: 100%;
+    height: fit-content;
+    padding: 0.5rem 0;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 400;
+    background: #334977;
+    color: white;
+  }
+
+  .btnSetor:hover:not(.clicked) {
+    background: #334977a8;
+    color: white;
+  }
+
+  .minhasListas-novaListas {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: end;
+  }
+
+  .minhasListas-novaListas a {
+    font-size: 17px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    background: #05112c;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .minhasListas-novaListas a:hover {
+    background: #05112cb5;
+  }
+
+  #newCategory,
+  #adicionarCategoria {
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    background: #c6cee145;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 500;
+    margin: 0 !important;
+  }
+
+  #newCategory:hover {
+    background: #c6cee128 !important;
+  }
+
+  #adicionarCategoria {
+    background: #05112c;
+  }
+
+  #adicionarCategoria:hover {
+    background: #05112cb5 !important;
+  }
+
+  #novaCategoriaInp {
+    text-align: center;
+    background: rgb(255, 255, 255);
+    color: black;
+    margin: 0;
+  }
+
+  .divAddCat {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .removerCategoriaP {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+  }
+  .removerCategoriaP select {
+    width: 90%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+</style>

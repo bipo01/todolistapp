@@ -1,0 +1,156 @@
+<script>
+  newUser?.addEventListener("click", () => {
+    if (newUser.textContent == "Novo usuário") {
+      novoUsuario.classList.toggle("hidden");
+      cancelarNewUser.classList.toggle("hidden");
+      newUser.textContent =
+        newUser.textContent == "Novo usuário" ? "Adicionar" : "Novo usuário";
+    } else {
+      const newUserValue = novoUsuario.value.trim();
+
+      socket.emit("new-user", { newUserValue, idList });
+
+      novoUsuario.classList.toggle("hidden");
+      cancelarNewUser.classList.toggle("hidden");
+      newUser.textContent =
+        newUser.textContent == "Novo usuário" ? "Adicionar" : "Novo usuário";
+    }
+
+    novoUsuario.value = "";
+  });
+
+  cancelarNewUser?.addEventListener("click", () => {
+    novoUsuario.classList.toggle("hidden");
+    cancelarNewUser.classList.toggle("hidden");
+    newUser.textContent =
+      newUser.textContent == "Novo usuário" ? "Adicionar" : "Novo usuário";
+  });
+
+  selectUserTasks?.addEventListener("input", () => {
+    const selected = selectUserTasks.value;
+    curUser = selectUserTasks
+      .querySelector(`[value="${selected}"]`)
+      .textContent.trim();
+
+    btnsSetor.forEach((btn) => {
+      selectTasksBySetor(btn);
+    });
+
+    selectTasksByUser();
+  });
+
+  deletarUser?.addEventListener("click", () => {
+    const user = prompt("Usuário a ser removido").trim();
+
+    document.querySelectorAll("#selectUserTasks option").forEach((el) => {
+      const userOption = el.textContent.trim().toLowerCase();
+      const userOptionUsername = el.getAttribute("username")?.trim();
+
+      if (
+        (user.toLowerCase() == userOption.toLowerCase() && user != "todos") ||
+        user == userOptionUsername
+      ) {
+        const user_id = Number(el.value);
+
+        if (user_id == idAdmin)
+          return alert("Você não pode excluir você mesmo");
+
+        socket.emit("delete-user", { user_id, idList });
+
+        el.remove();
+      }
+    });
+
+    document.querySelectorAll("#responsavelInp option").forEach((el) => {
+      const userOption = el.textContent.trim().toLowerCase();
+
+      if (user == userOption && user != "todos") {
+        const userIdDeletado = Number(el.value);
+        if (userIdDeletado == idAdmin)
+          return alert("Você não pode excluir você mesmo");
+        el.remove();
+      }
+    });
+  });
+
+  function selectTasksBySetor(btn) {
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      const setorTarefa = el.getAttribute("category");
+
+      if (setorTarefa == category) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+    });
+
+    if (category == "Todas") {
+      document.querySelectorAll(".div-tarefa").forEach((el) => {
+        el.classList.remove("hidden");
+      });
+    }
+  }
+
+  function selectTasksByUser() {
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      el.classList.remove("hiddenUser");
+    });
+
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      const user = el.getAttribute("username").trim();
+
+      if (user != curUser) {
+        el.classList.add("hiddenUser");
+      }
+    });
+
+    if (curUser == "Todos") {
+      document.querySelectorAll(".div-tarefa").forEach((el) => {
+        el.classList.remove("hiddenUser");
+      });
+    }
+  }
+
+  socket.on("new-user", (data) => {
+    if (idList != data.list_id) return;
+
+    const html = `
+        <option
+        userName="${data.newUser.username}"
+         value="${data.newUser.id}"
+         >${data.newUser.name}
+         </option>
+    `;
+
+    selectUserTasks.insertAdjacentHTML("beforeend", html);
+    user_id.insertAdjacentHTML("beforeend", html);
+    document
+      .querySelector("#editTaskContainer #user_id")
+      .insertAdjacentHTML("beforeend", html);
+  });
+
+  socket.on("delete-user", (data) => {
+    const idUserDeleted = data.user_id;
+    const idListaDeleted = data.list_id;
+
+    if (idUser == idUserDeleted && idListaDeleted == idList) {
+      location.href = "/";
+    }
+
+    if (idListaDeleted == idList) {
+      document
+        .querySelector(`#selectUserTasks option[value="${idUserDeleted}"]`)
+        ?.remove();
+      document
+        .querySelector(
+          `#editTaskContainer #user_id option[value="${idUserDeleted}"]`
+        )
+        ?.remove();
+      document
+        .querySelector(
+          `#newTaskContainer #user_id option[value="${idUserDeleted}"]`
+        )
+        ?.remove();
+    }
+  });
+</script>

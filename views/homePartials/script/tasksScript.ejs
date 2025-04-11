@@ -1,0 +1,70 @@
+<script>
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("excluir")) {
+      const task_id = e.target.closest(".div-tarefa").getAttribute("taskId");
+      socket.emit("delete-task", task_id);
+      return;
+    }
+
+    if (e.target.classList.contains("comecar")) {
+      const task_id = e.target.closest(".div-tarefa").getAttribute("taskId");
+      socket.emit("start-task", task_id);
+      return;
+    }
+
+    if (e.target.classList.contains("completar")) {
+      const task_id = e.target.closest(".div-tarefa").getAttribute("taskId");
+      socket.emit("complete-task", task_id);
+      return;
+    }
+
+    if (e.target.classList.contains("fa-solid")) {
+      editTaskContainer.classList.remove("hidden");
+      const parent = e.target.closest(".div-tarefa");
+      const task = parent.querySelector("h3").textContent;
+      const task_id = parent.getAttribute("taskId");
+      const description = parent.querySelector(".description").textContent;
+      const category = parent.getAttribute("category");
+      const user_id = parent.getAttribute("user_id");
+      const rawDeadline = parent.querySelector("p").textContent.split("/");
+      const formattedDeadline = `${rawDeadline[2]}-${rawDeadline[1]}-${rawDeadline[0]}`;
+
+      console.log(formattedDeadline);
+
+      formEdit.querySelector("#task").value = task;
+      formEdit.querySelector("#task_id").value = task_id;
+      formEdit.querySelector("#description").value = description;
+      formEdit.querySelector("#category").value = category;
+      formEdit.querySelector("#user_id").value = user_id;
+      formEdit.querySelector("#deadline").value = formattedDeadline;
+
+      return;
+    }
+
+    if (
+      e.target.classList.contains("div-tarefa") ||
+      e.target.closest(".div-tarefa")
+    ) {
+      e.target
+        .closest(".div-tarefa")
+        .querySelector(".description")
+        .classList.toggle("hidden");
+    }
+  });
+
+  socket.on("delete-task", (task_id) => {
+    document.querySelector(`[taskId="${task_id}"]`).remove();
+  });
+
+  socket.on("start-task", (task_id) => {
+    const task = document.querySelector(`[taskId="${task_id}"]`);
+    if (!task) return;
+    document.querySelectorAll(".tarefas")[1].append(task);
+  });
+
+  socket.on("complete-task", (task_id) => {
+    const task = document.querySelector(`[taskId="${task_id}"]`);
+    if (!task) return;
+    document.querySelectorAll(".tarefas")[2].append(task);
+  });
+</script>

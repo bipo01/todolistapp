@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Lists</title>
+    <%- include("./style/listsStyle.ejs") %>
+  </head>
+
+  <body idUser="<%= user.id %>">
+    <main class="container">
+      <h1>My Lists</h1>
+      <% if (myLists.length > 0) { %>
+      <div class="listsContainer">
+        <% myLists.forEach(list => { %>
+        <div class="listItem" idList="<%= list.id %>">
+          <form action="/home" method="post" class="formList">
+            <input type="hidden" name="list" value="<%= list.id %>" />
+            <button type="submit" class="btnList"><%= list.list %></button>
+          </form>
+
+          <% if (list.adm_id == user.id) { %>
+          <div class="edit-delete-forms">
+            <form action="/edit-sheet" method="post" class="editSheet">
+              <input type="hidden" name="idList" value="<%= list.id %>" />
+              <input type="hidden" name="idUser" value="<%= user.id %>" />
+              <button type="submit" class="btnEdit">Editar</button>
+            </form>
+            <form action="/delete-sheet" method="post" class="deleteSheet">
+              <input type="hidden" name="idList" value="<%= list.id %>" />
+              <input type="hidden" name="idUser" value="<%= user.id %>" />
+              <button type="submit" class="btnDelete">Deletar</button>
+            </form>
+          </div>
+          <% } %> <% if (list.adm_id != user.id) { %>
+          <form
+            class="leaveSheet"
+            action="/leave-sheet"
+            method="post"
+            class="form-delete"
+          >
+            <input type="hidden" name="idList" value="<%= list.id %>" />
+            <input type="hidden" name="idUser" value="<%= user.id %>" />
+            <button type="submit" class="btnDelete">Sair</button>
+          </form>
+          <% } %>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <p class="message">You don't have any lists.</p>
+      <% } %>
+
+      <a id="newSheet" href="/new-sheet">Nova Lista</a>
+      <a id="logout" href="/logout">Sair da minha conta</a>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <%- include("./script/listsScript.ejs") %>
+  </body>
+</html>

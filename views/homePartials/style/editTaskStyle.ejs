@@ -1,0 +1,80 @@
+<style>
+  #editTaskContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.911);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  form[action="/edit"] {
+    background: #3a3a3b;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+    flex-direction: column;
+    width: fit-content;
+    min-width: 500px;
+    min-height: 550px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  form[action="/edit"] input,
+  form[action="/edit"] button,
+  form[action="/edit"] textarea,
+  form[action="/edit"] select {
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  /* form[action="/add"] input:focus,
+  form[action="/add"] button:focus,
+  form[action="/add"] textarea:focus,
+  form[action="/add"] select:focus {
+    filter: contrast(80%);
+  } */
+
+  form[action="/edit"] input,
+  form[action="/edit"] button,
+  form[action="/edit"] select {
+    font-size: 20px;
+    height: 50px;
+  }
+
+  form[action="/edit"] textarea {
+    font-size: 20px;
+  }
+
+  form[action="/edit"] input::placeholder,
+  form[action="/edit"] button,
+  form[action="/edit"] textarea::placeholder {
+    color: black;
+    font-size: 20px;
+  }
+
+  .dificuldade-prazo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 5px;
+  }
+
+  .dificuldade-prazo input,
+  .dificuldade-prazo button {
+    flex: 1;
+    height: 50px;
+  }
+</style>

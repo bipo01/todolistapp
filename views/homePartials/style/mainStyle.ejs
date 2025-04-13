@@ -1,11 +1,10 @@
 <style>
-  main {
+  .tarefas-detalhes {
     grid-column: 3/13;
-    grid-row: 1/13;
+    grid-row: 2/21;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 5px;
     max-width: 100%;
     word-wrap: break-word;
   }
@@ -28,9 +27,14 @@
   }
 
   .showNewTask-addSelectUser {
+    grid-column: 3/13;
+    grid-row: 1/2;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 !important;
+    height: 100% !important;
+    margin: 0;
   }
 
   .addSelectUser {
@@ -39,7 +43,12 @@
     gap: 5px;
   }
 
-  #selectUserTasks {
+  #selectCategoryMedia {
+    display: none;
+  }
+
+  #selectUserTasks,
+  #selectCategoryMedia {
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;

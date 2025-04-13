@@ -1,0 +1,95 @@
+<style>
+  @media screen and (max-width: 900px) {
+    .tarefas-detalhes {
+      grid-row: 2/21;
+      grid-column: 1/21;
+      flex-direction: column;
+      padding: 5px;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    .tarefas-state {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 80% !important;
+      gap: 5px;
+      overflow-y: auto;
+    }
+
+    .tarefas {
+      overflow-y: auto;
+      padding: 5px;
+    }
+
+    .showNewTask-addSelectUser {
+      grid-column: 1/21 !important;
+      grid-row: 1/2 !important;
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .addSelectUser {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    #selectUserTasks {
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #minhasListas {
+      font-size: 0; /* Esconde o texto */
+    }
+    .minhasListas-novaListas {
+      position: fixed;
+      bottom: 1%;
+      left: 0;
+      gap: 0;
+      display: flex;
+      flex-direction: column; /* <-- aqui */
+      align-items: center;
+      justify-content: center;
+    }
+
+    .minhasListas-novaListas a {
+      margin: 2px !important; /* Garante que nenhuma margem atrapalhe */
+      padding: 10px !important;
+    }
+
+    #minhasListas::before {
+      content: "\f015"; /* código do ícone "fa-house" */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 16px; /* Mostra o ícone */
+      border-radius: 5px;
+      margin: 0;
+    }
+
+    #newSheet {
+      font-size: 0; /* Esconde o texto */
+    }
+
+    #newSheet::before {
+      content: "\f055"; /* código do ícone "fa-house" */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 16px; /* Mostra o ícone */
+      border-radius: 5px;
+      margin: 0;
+    }
+
+    #selectCategoryMedia {
+      display: block;
+    }
+
+    .h1-btns {
+      display: none;
+    }
+  }
+</style>

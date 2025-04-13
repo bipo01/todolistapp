@@ -8,19 +8,19 @@
   </head>
   <body>
     <form action="/register" method="post">
-      <h2>Welcome To Our ToDoList!</h2>
+      <h2>Bem-vindo!</h2>
 
       <input class="<%= username && "userExists" %>" value="<%= username || ""
       %>" autocomplete="off" type="text" name="username" id="username"
-      placeholder="Username" /> <input value="<%= name || "" %>"
+      placeholder="Nome do Usuário" /> <input value="<%= name || "" %>"
       autocomplete="off" type="text" name="name" id="name" placeholder="Name" />
       <input value="<%= password || "" %>" autocomplete="off" type="password"
-      name="password" id="password" placeholder="Password" /> <input value="<%=
+      name="password" id="password" placeholder="Senha" /> <input value="<%=
       password || "" %>" autocomplete="off" type="password" name="passwordC"
-      id="passwordC" placeholder="Confirm Password" />
+      id="passwordC" placeholder="Confirmar Senha" />
 
-      <button type="submit">Sign Up</button>
-      <a href="/login">Log in my account</a>
+      <button type="submit">Criar</button>
+      <a href="/login">Já tenho uma conta</a>
     </form>
 
     <%-include("./script/registerScript.ejs")%>

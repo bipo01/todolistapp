@@ -39,6 +39,19 @@
     selectTasksByUser();
   });
 
+  selectCategoryMedia.addEventListener("input", () => {
+    const selected = selectCategoryMedia.value;
+    document.querySelectorAll(".div-tarefa").forEach((el) => {
+      if (el.getAttribute("category") == selected) {
+        el.classList.remove("hidden");
+      } else {
+        el.classList.add("hidden");
+      }
+
+      if (selected == "Sem categoria") el.classList.remove("hidden");
+    });
+  });
+
   deletarUser?.addEventListener("click", () => {
     const user = prompt("Usuário a ser removido").trim();
 

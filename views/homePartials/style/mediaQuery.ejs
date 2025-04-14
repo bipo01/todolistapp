@@ -1,5 +1,5 @@
 <style>
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1000px) {
     .tarefas-detalhes {
       grid-row: 2/21;
       grid-column: 1/21;
@@ -7,6 +7,7 @@
       padding: 5px;
       align-items: center;
       overflow-y: auto;
+      flex-direction: row;
     }
 
     .tarefas-state {
@@ -26,15 +27,29 @@
       grid-column: 1/21 !important;
       grid-row: 1/2 !important;
       display: flex;
-      justify-content: right;
-      align-items: center;
-      gap: 5px;
+      justify-content: space-between;
+    }
+
+    #newTask {
+      height: 100%;
+      font-size: 12px;
+    }
+
+    .newTask-selectUser {
+      height: 100%;
+      display: flex;
+
+      justify-content: center;
     }
 
     .addSelectUser {
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
+    }
+
+    .addSelectUser > * {
+      width: 100%;
     }
 
     #selectUserTasks {
@@ -86,10 +101,48 @@
 
     #selectCategoryMedia {
       display: block;
+      height: 100%;
     }
 
     .h1-btns {
       display: none;
+    }
+
+    form[action="/add"],
+    form[action="/edit"] {
+      background: #3a3a3b;
+      margin: 5px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      border-radius: 10px;
+      flex-direction: column;
+      width: fit-content;
+      min-width: 75%;
+      min-height: 75%;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    form[action="/add"] input,
+    form[action="/add"] button,
+    form[action="/add"] select,
+    form[action="/edit"] input,
+    form[action="/edit"] button,
+    form[action="/edit"] select {
+      font-size: 20px;
+      height: 50px;
+    }
+
+    .dificuldade-prazo {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .tarefas-detalhes {
+      flex-direction: column !important;
     }
   }
 </style>

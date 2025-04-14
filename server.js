@@ -219,6 +219,10 @@ app.get("/", async (req, res) => {
   });
 });
 
+app.get("/home", (req, res) => {
+  return res.redirect("/");
+});
+
 app.get("/login", (req, res) => {
   res.render("login.ejs");
 });
